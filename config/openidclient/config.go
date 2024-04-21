@@ -13,6 +13,9 @@ const (
 func Configure(p *ujconfig.Provider) {
 	p.AddResourceConfigurator("keycloak_openid_client", func(r *ujconfig.Resource) {
 		r.ShortGroup = Group
+		if s, ok := r.TerraformResource.Schema["client_id"]; ok {
+			s.Sensitive = true
+		}
 	})
 
 	p.AddResourceConfigurator("keycloak_openid_client_default_scopes", func(r *ujconfig.Resource) {

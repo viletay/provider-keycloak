@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -20,6 +16,7 @@ import (
 type ClientClientPolicyInitParameters struct {
 
 	// The clients allowed by this client policy.
+	// +listType=set
 	Clients []*string `json:"clients,omitempty" tf:"clients,omitempty"`
 
 	// (Computed) Dictates how the policies associated with a given permission are evaluated and how a final decision is obtained. Could be one of AFFIRMATIVE, CONSENSUS, or UNANIMOUS. Applies to permissions.
@@ -34,6 +31,18 @@ type ClientClientPolicyInitParameters struct {
 	// The name of this client policy.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The realm this client policy exists within.
+	// +crossplane:generate:reference:type=github.com/viletay/provider-keycloak/apis/realm/v1alpha1.Realm
+	RealmID *string `json:"realmId,omitempty" tf:"realm_id,omitempty"`
+
+	// Reference to a Realm in realm to populate realmId.
+	// +kubebuilder:validation:Optional
+	RealmIDRef *v1.Reference `json:"realmIdRef,omitempty" tf:"-"`
+
+	// Selector for a Realm in realm to populate realmId.
+	// +kubebuilder:validation:Optional
+	RealmIDSelector *v1.Selector `json:"realmIdSelector,omitempty" tf:"-"`
+
 	// The ID of the resource server this client policy is attached to.
 	ResourceServerID *string `json:"resourceServerId,omitempty" tf:"resource_server_id,omitempty"`
 }
@@ -41,6 +50,7 @@ type ClientClientPolicyInitParameters struct {
 type ClientClientPolicyObservation struct {
 
 	// The clients allowed by this client policy.
+	// +listType=set
 	Clients []*string `json:"clients,omitempty" tf:"clients,omitempty"`
 
 	// (Computed) Dictates how the policies associated with a given permission are evaluated and how a final decision is obtained. Could be one of AFFIRMATIVE, CONSENSUS, or UNANIMOUS. Applies to permissions.
@@ -68,6 +78,7 @@ type ClientClientPolicyParameters struct {
 
 	// The clients allowed by this client policy.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Clients []*string `json:"clients,omitempty" tf:"clients,omitempty"`
 
 	// (Computed) Dictates how the policies associated with a given permission are evaluated and how a final decision is obtained. Could be one of AFFIRMATIVE, CONSENSUS, or UNANIMOUS. Applies to permissions.
@@ -128,13 +139,14 @@ type ClientClientPolicyStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ClientClientPolicy is the Schema for the ClientClientPolicys API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,keycloak}
 type ClientClientPolicy struct {
 	metav1.TypeMeta   `json:",inline"`

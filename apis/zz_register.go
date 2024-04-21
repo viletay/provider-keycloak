@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -14,8 +10,18 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/viletay/provider-keycloak/apis/openidclient/v1alpha1"
+	v1alpha1 "github.com/viletay/provider-keycloak/apis/authentication/v1alpha1"
+	v1alpha1default "github.com/viletay/provider-keycloak/apis/default/v1alpha1"
+	v1alpha1group "github.com/viletay/provider-keycloak/apis/group/v1alpha1"
+	v1alpha1mapper "github.com/viletay/provider-keycloak/apis/mapper/v1alpha1"
+	v1alpha1oidc "github.com/viletay/provider-keycloak/apis/oidc/v1alpha1"
+	v1alpha1openidclient "github.com/viletay/provider-keycloak/apis/openidclient/v1alpha1"
+	v1alpha1openidgroup "github.com/viletay/provider-keycloak/apis/openidgroup/v1alpha1"
 	v1alpha1realm "github.com/viletay/provider-keycloak/apis/realm/v1alpha1"
+	v1alpha1role "github.com/viletay/provider-keycloak/apis/role/v1alpha1"
+	v1alpha1saml "github.com/viletay/provider-keycloak/apis/saml/v1alpha1"
+	v1alpha1samlclient "github.com/viletay/provider-keycloak/apis/samlclient/v1alpha1"
+	v1alpha1user "github.com/viletay/provider-keycloak/apis/user/v1alpha1"
 	v1alpha1apis "github.com/viletay/provider-keycloak/apis/v1alpha1"
 	v1beta1 "github.com/viletay/provider-keycloak/apis/v1beta1"
 )
@@ -24,7 +30,17 @@ func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1default.SchemeBuilder.AddToScheme,
+		v1alpha1group.SchemeBuilder.AddToScheme,
+		v1alpha1mapper.SchemeBuilder.AddToScheme,
+		v1alpha1oidc.SchemeBuilder.AddToScheme,
+		v1alpha1openidclient.SchemeBuilder.AddToScheme,
+		v1alpha1openidgroup.SchemeBuilder.AddToScheme,
 		v1alpha1realm.SchemeBuilder.AddToScheme,
+		v1alpha1role.SchemeBuilder.AddToScheme,
+		v1alpha1saml.SchemeBuilder.AddToScheme,
+		v1alpha1samlclient.SchemeBuilder.AddToScheme,
+		v1alpha1user.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
 	)

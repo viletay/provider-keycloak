@@ -7,6 +7,15 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
+	"github.com/viletay/provider-keycloak/config/defaults"
+	"github.com/viletay/provider-keycloak/config/group"
+	"github.com/viletay/provider-keycloak/config/mapper"
+	"github.com/viletay/provider-keycloak/config/oidc"
+	"github.com/viletay/provider-keycloak/config/openidgroup"
+	"github.com/viletay/provider-keycloak/config/role"
+	"github.com/viletay/provider-keycloak/config/saml"
+	"github.com/viletay/provider-keycloak/config/samlclient"
+	"github.com/viletay/provider-keycloak/config/user"
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 	"github.com/viletay/provider-keycloak/config/common"
@@ -39,7 +48,20 @@ func GetProvider() *ujconfig.Provider {
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
 		realm.Configure,
+
+		user.Configure,
+		group.Configure,
+		role.Configure,
+
+		oidc.Configure,
 		openidclient.Configure,
+		openidgroup.Configure,
+
+		saml.Configure,
+		samlclient.Configure,
+
+		mapper.Configure,
+		defaults.Configure,
 	} {
 		configure(pc)
 	}

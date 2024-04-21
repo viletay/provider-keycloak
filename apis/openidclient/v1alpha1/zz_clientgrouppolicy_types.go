@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -29,6 +25,17 @@ type ClientGroupPolicyInitParameters struct {
 	Logic *string `json:"logic,omitempty" tf:"logic,omitempty"`
 
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// +crossplane:generate:reference:type=github.com/viletay/provider-keycloak/apis/realm/v1alpha1.Realm
+	RealmID *string `json:"realmId,omitempty" tf:"realm_id,omitempty"`
+
+	// Reference to a Realm in realm to populate realmId.
+	// +kubebuilder:validation:Optional
+	RealmIDRef *v1.Reference `json:"realmIdRef,omitempty" tf:"-"`
+
+	// Selector for a Realm in realm to populate realmId.
+	// +kubebuilder:validation:Optional
+	RealmIDSelector *v1.Selector `json:"realmIdSelector,omitempty" tf:"-"`
 
 	ResourceServerID *string `json:"resourceServerId,omitempty" tf:"resource_server_id,omitempty"`
 }
@@ -141,13 +148,14 @@ type ClientGroupPolicyStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ClientGroupPolicy is the Schema for the ClientGroupPolicys API. <no value>
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,keycloak}
 type ClientGroupPolicy struct {
 	metav1.TypeMeta   `json:",inline"`

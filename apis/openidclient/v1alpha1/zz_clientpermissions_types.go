@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
-//
-// SPDX-License-Identifier: Apache-2.0
-
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -18,6 +14,19 @@ import (
 )
 
 type ClientPermissionsInitParameters struct {
+
+	// The id of the client that provides the role.
+	// +crossplane:generate:reference:type=github.com/viletay/provider-keycloak/apis/openidclient/v1alpha1.Client
+	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
+
+	// Reference to a Client in openidclient to populate clientId.
+	// +kubebuilder:validation:Optional
+	ClientIDRef *v1.Reference `json:"clientIdRef,omitempty" tf:"-"`
+
+	// Selector for a Client in openidclient to populate clientId.
+	// +kubebuilder:validation:Optional
+	ClientIDSelector *v1.Selector `json:"clientIdSelector,omitempty" tf:"-"`
+
 	ConfigureScope []ConfigureScopeInitParameters `json:"configureScope,omitempty" tf:"configure_scope,omitempty"`
 
 	ManageScope []ManageScopeInitParameters `json:"manageScope,omitempty" tf:"manage_scope,omitempty"`
@@ -27,6 +36,18 @@ type ClientPermissionsInitParameters struct {
 	MapRolesCompositeScope []MapRolesCompositeScopeInitParameters `json:"mapRolesCompositeScope,omitempty" tf:"map_roles_composite_scope,omitempty"`
 
 	MapRolesScope []MapRolesScopeInitParameters `json:"mapRolesScope,omitempty" tf:"map_roles_scope,omitempty"`
+
+	// The realm this group exists in.
+	// +crossplane:generate:reference:type=github.com/viletay/provider-keycloak/apis/realm/v1alpha1.Realm
+	RealmID *string `json:"realmId,omitempty" tf:"realm_id,omitempty"`
+
+	// Reference to a Realm in realm to populate realmId.
+	// +kubebuilder:validation:Optional
+	RealmIDRef *v1.Reference `json:"realmIdRef,omitempty" tf:"-"`
+
+	// Selector for a Realm in realm to populate realmId.
+	// +kubebuilder:validation:Optional
+	RealmIDSelector *v1.Selector `json:"realmIdSelector,omitempty" tf:"-"`
 
 	TokenExchangeScope []TokenExchangeScopeInitParameters `json:"tokenExchangeScope,omitempty" tf:"token_exchange_scope,omitempty"`
 
@@ -124,6 +145,7 @@ type ConfigureScopeInitParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// A list of policy IDs
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -136,6 +158,7 @@ type ConfigureScopeObservation struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// A list of policy IDs
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -151,6 +174,7 @@ type ConfigureScopeParameters struct {
 
 	// A list of policy IDs
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -163,6 +187,7 @@ type ManageScopeInitParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// A list of policy IDs
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -175,6 +200,7 @@ type ManageScopeObservation struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// A list of policy IDs
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -190,6 +216,7 @@ type ManageScopeParameters struct {
 
 	// A list of policy IDs
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -202,6 +229,7 @@ type MapRolesClientScopeScopeInitParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// A list of policy IDs
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -214,6 +242,7 @@ type MapRolesClientScopeScopeObservation struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// A list of policy IDs
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -229,6 +258,7 @@ type MapRolesClientScopeScopeParameters struct {
 
 	// A list of policy IDs
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -241,6 +271,7 @@ type MapRolesCompositeScopeInitParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// A list of policy IDs
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -253,6 +284,7 @@ type MapRolesCompositeScopeObservation struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// A list of policy IDs
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -268,6 +300,7 @@ type MapRolesCompositeScopeParameters struct {
 
 	// A list of policy IDs
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -280,6 +313,7 @@ type MapRolesScopeInitParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// A list of policy IDs
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -292,6 +326,7 @@ type MapRolesScopeObservation struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// A list of policy IDs
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -307,6 +342,7 @@ type MapRolesScopeParameters struct {
 
 	// A list of policy IDs
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -319,6 +355,7 @@ type TokenExchangeScopeInitParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// A list of policy IDs
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -331,6 +368,7 @@ type TokenExchangeScopeObservation struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// A list of policy IDs
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -346,6 +384,7 @@ type TokenExchangeScopeParameters struct {
 
 	// A list of policy IDs
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -358,6 +397,7 @@ type ViewScopeInitParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// A list of policy IDs
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -370,6 +410,7 @@ type ViewScopeObservation struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// A list of policy IDs
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -385,6 +426,7 @@ type ViewScopeParameters struct {
 
 	// A list of policy IDs
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Policies []*string `json:"policies,omitempty" tf:"policies,omitempty"`
 }
 
@@ -412,13 +454,14 @@ type ClientPermissionsStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ClientPermissions is the Schema for the ClientPermissionss API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,keycloak}
 type ClientPermissions struct {
 	metav1.TypeMeta   `json:",inline"`
