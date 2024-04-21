@@ -27,9 +27,33 @@ const (
 	errUnmarshalCredentials = "cannot unmarshal keycloak credentials as JSON"
 )
 
+// Password and client secret auth parameters  + general config parameters
+// https://registry.terraform.io/providers/mrparkers/keycloak/latest/docs#argument-reference
+// https://registry.terraform.io/providers/mrparkers/keycloak/latest/docs#example-usage-client-credentials-grant
+// https://registry.terraform.io/providers/mrparkers/keycloak/latest/docs#example-usage-password-grant
+
+var requiredKeycloakConfigKeys = []string{
+	"client_id",
+	"url",
+}
+
+var optionalKeycloakConfigKeys = []string{
+	"client_secret",
+	"username",
+	"password",
+	"realm",
+	"initial_login",
+	"client_timeout",
+	"tls_insecure_skip_verify",
+	"root_ca_certificate",
+	"base_path",
+	"additional_headers",
+	"red_hat_sso",
+}
+
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
 // returns Terraform provider setup configuration
-func TerraformSetupBuilder(version, providerSource, providerVersion string) terraform.SetupFn {
+func TerraformSetupBuilder(version, providerSource, providerVersion string) terraform.SetupFn { // nolint: gocyclo
 	return func(ctx context.Context, client client.Client, mg resource.Managed) (terraform.Setup, error) {
 		ps := terraform.Setup{
 			Version: version,
@@ -62,11 +86,26 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
 		}
 
-		// Set credentials in Terraform provider configuration.
-		/*ps.Configuration = map[string]any{
-			"username": creds["username"],
-			"password": creds["password"],
-		}*/
+		// set provider configuration
+		ps.Configuration = map[string]any{}
+		// Iterate over the requiredKeycloakConfigKeys, they must be set
+		for _, key := range requiredKeycloakConfigKeys {
+			if value, ok := creds[key]; ok {
+				if !ok {
+					// Return an error if a required key is missing
+					return ps, errors.Errorf("required Keycloak configuration key '%s' is missing", key)
+				}
+				ps.Configuration[key] = value
+			}
+		}
+
+		// Iterate over the optionalKeycloakConfigKeys, they can be set and do not have to be in the creds map
+		for _, key := range optionalKeycloakConfigKeys {
+			if value, ok := creds[key]; ok {
+				ps.Configuration[key] = value
+			}
+		}
+
 		return ps, nil
 	}
 }
