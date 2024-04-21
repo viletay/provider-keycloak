@@ -9,16 +9,36 @@ import (
 
 	"github.com/crossplane/upjet/pkg/controller"
 
-	resource "github.com/upbound/upjet-provider-template/internal/controller/null/resource"
-	providerconfig "github.com/upbound/upjet-provider-template/internal/controller/providerconfig"
+	client "github.com/viletay/provider-keycloak/internal/controller/openidclient/client"
+	clientclientpolicy "github.com/viletay/provider-keycloak/internal/controller/openidclient/clientclientpolicy"
+	clientdefaultscopes "github.com/viletay/provider-keycloak/internal/controller/openidclient/clientdefaultscopes"
+	clientgrouppolicy "github.com/viletay/provider-keycloak/internal/controller/openidclient/clientgrouppolicy"
+	clientpermissions "github.com/viletay/provider-keycloak/internal/controller/openidclient/clientpermissions"
+	clientrolepolicy "github.com/viletay/provider-keycloak/internal/controller/openidclient/clientrolepolicy"
+	clientscope "github.com/viletay/provider-keycloak/internal/controller/openidclient/clientscope"
+	clientserviceaccountrealmrole "github.com/viletay/provider-keycloak/internal/controller/openidclient/clientserviceaccountrealmrole"
+	clientserviceaccountrole "github.com/viletay/provider-keycloak/internal/controller/openidclient/clientserviceaccountrole"
+	clientuserpolicy "github.com/viletay/provider-keycloak/internal/controller/openidclient/clientuserpolicy"
+	providerconfig "github.com/viletay/provider-keycloak/internal/controller/providerconfig"
+	realm "github.com/viletay/provider-keycloak/internal/controller/realm/realm"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
-		resource.Setup,
+		client.Setup,
+		clientclientpolicy.Setup,
+		clientdefaultscopes.Setup,
+		clientgrouppolicy.Setup,
+		clientpermissions.Setup,
+		clientrolepolicy.Setup,
+		clientscope.Setup,
+		clientserviceaccountrealmrole.Setup,
+		clientserviceaccountrole.Setup,
+		clientuserpolicy.Setup,
 		providerconfig.Setup,
+		realm.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err

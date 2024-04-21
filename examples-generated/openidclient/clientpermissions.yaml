@@ -1,0 +1,63 @@
+apiVersion: openidclient.keycloak.upbound.io/v1alpha1
+kind: ClientPermissions
+metadata:
+  annotations:
+    meta.upbound.io/example-id: openidclient/v1alpha1/clientpermissions
+  labels:
+    testing.upbound.io/example-name: my_permission
+  name: my-permission
+spec:
+  forProvider:
+    clientIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_openid_client
+    realmIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: realm
+    viewScope:
+    - decisionStrategy: UNANIMOUS
+      description: my description
+      policies:
+      - ${keycloak_openid_client_user_policy.test.id}
+
+---
+
+apiVersion: openidclient.keycloak.upbound.io/v1alpha1
+kind: Client
+metadata:
+  annotations:
+    meta.upbound.io/example-id: openidclient/v1alpha1/clientpermissions
+  labels:
+    testing.upbound.io/example-name: my_openid_client
+  name: my-openid-client
+spec:
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    clientSecretSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    name: my_openid_client
+    realmIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: realm
+    standardFlowEnabled: true
+    validRedirectUris:
+    - http://localhost:8080/*
+
+---
+
+apiVersion: realm.keycloak.upbound.io/v1alpha1
+kind: Realm
+metadata:
+  annotations:
+    meta.upbound.io/example-id: openidclient/v1alpha1/clientpermissions
+  labels:
+    testing.upbound.io/example-name: realm
+  name: realm
+spec:
+  forProvider:
+    realm: realm

@@ -10,7 +10,17 @@ import "github.com/crossplane/upjet/pkg/config"
 // provider.
 var ExternalNameConfigs = map[string]config.ExternalName{
 	// Import requires using a randomly generated ID from provider: nl-2e21sda
-	"null_resource": config.IdentifierFromProvider,
+	"keycloak_realm":                                    config.IdentifierFromProvider,
+	"keycloak_openid_client_client_policy":              config.IdentifierFromProvider,
+	"keycloak_openid_client_group_policy":               config.IdentifierFromProvider,
+	"keycloak_openid_client_permissions":                config.IdentifierFromProvider,
+	"keycloak_openid_client_role_policy":                config.IdentifierFromProvider,
+	"keycloak_openid_client_user_policy":                config.IdentifierFromProvider,
+	"keycloak_openid_client_default_scopes":             config.IdentifierFromProvider,
+	"keycloak_openid_client_scope":                      config.IdentifierFromProvider,
+	"keycloak_openid_client":                            config.IdentifierFromProvider,
+	"keycloak_openid_client_service_account_realm_role": config.IdentifierFromProvider,
+	"keycloak_openid_client_service_account_role":       config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
