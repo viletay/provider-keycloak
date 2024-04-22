@@ -11,6 +11,9 @@ const (
 func Configure(p *ujconfig.Provider) {
 	p.AddResourceConfigurator("keycloak_realm", func(r *ujconfig.Resource) {
 		r.ShortGroup = Group
+		r.LateInitializer = ujconfig.LateInitializer{
+			IgnoredFields: []string{"browser_flow"},
+		}
 	})
 
 	p.AddResourceConfigurator("keycloak_required_action", func(r *ujconfig.Resource) {
