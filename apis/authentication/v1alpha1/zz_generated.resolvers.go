@@ -78,22 +78,6 @@ func (mg *Execution) ResolveReferences(ctx context.Context, c client.Reader) err
 	mg.Spec.ForProvider.RealmID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.RealmIDRef = rsp.ResolvedReference
 
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RealmID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.InitProvider.RealmIDRef,
-		Selector:     mg.Spec.InitProvider.RealmIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.RealmList{},
-			Managed: &v1alpha1.Realm{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.RealmID")
-	}
-	mg.Spec.InitProvider.RealmID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.RealmIDRef = rsp.ResolvedReference
-
 	return nil
 }
 
@@ -136,38 +120,6 @@ func (mg *ExecutionConfig) ResolveReferences(ctx context.Context, c client.Reade
 	mg.Spec.ForProvider.RealmID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.RealmIDRef = rsp.ResolvedReference
 
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ExecutionID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.InitProvider.ExecutionIDRef,
-		Selector:     mg.Spec.InitProvider.ExecutionIDSelector,
-		To: reference.To{
-			List:    &ExecutionList{},
-			Managed: &Execution{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.ExecutionID")
-	}
-	mg.Spec.InitProvider.ExecutionID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.ExecutionIDRef = rsp.ResolvedReference
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RealmID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.InitProvider.RealmIDRef,
-		Selector:     mg.Spec.InitProvider.RealmIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.RealmList{},
-			Managed: &v1alpha1.Realm{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.RealmID")
-	}
-	mg.Spec.InitProvider.RealmID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.RealmIDRef = rsp.ResolvedReference
-
 	return nil
 }
 
@@ -194,22 +146,6 @@ func (mg *Flow) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mg.Spec.ForProvider.RealmID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.RealmIDRef = rsp.ResolvedReference
 
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RealmID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.InitProvider.RealmIDRef,
-		Selector:     mg.Spec.InitProvider.RealmIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.RealmList{},
-			Managed: &v1alpha1.Realm{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.RealmID")
-	}
-	mg.Spec.InitProvider.RealmID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.RealmIDRef = rsp.ResolvedReference
-
 	return nil
 }
 
@@ -235,22 +171,6 @@ func (mg *Subflow) ResolveReferences(ctx context.Context, c client.Reader) error
 	}
 	mg.Spec.ForProvider.RealmID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.RealmIDRef = rsp.ResolvedReference
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RealmID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.InitProvider.RealmIDRef,
-		Selector:     mg.Spec.InitProvider.RealmIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.RealmList{},
-			Managed: &v1alpha1.Realm{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.RealmID")
-	}
-	mg.Spec.InitProvider.RealmID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.RealmIDRef = rsp.ResolvedReference
 
 	return nil
 }

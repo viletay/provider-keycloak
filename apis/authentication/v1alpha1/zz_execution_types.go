@@ -18,21 +18,6 @@ type ExecutionInitParameters struct {
 	// The name of the authenticator. This can be found by experimenting with the GUI and looking at HTTP requests within the network tab of your browser's development tools.
 	Authenticator *string `json:"authenticator,omitempty" tf:"authenticator,omitempty"`
 
-	// The alias of the flow this execution is attached to.
-	ParentFlowAlias *string `json:"parentFlowAlias,omitempty" tf:"parent_flow_alias,omitempty"`
-
-	// The realm the authentication execution exists in.
-	// +crossplane:generate:reference:type=github.com/viletay/provider-keycloak/apis/realm/v1alpha1.Realm
-	RealmID *string `json:"realmId,omitempty" tf:"realm_id,omitempty"`
-
-	// Reference to a Realm in realm to populate realmId.
-	// +kubebuilder:validation:Optional
-	RealmIDRef *v1.Reference `json:"realmIdRef,omitempty" tf:"-"`
-
-	// Selector for a Realm in realm to populate realmId.
-	// +kubebuilder:validation:Optional
-	RealmIDSelector *v1.Selector `json:"realmIdSelector,omitempty" tf:"-"`
-
 	// The requirement setting, which can be one of REQUIRED, ALTERNATIVE, OPTIONAL, CONDITIONAL, or DISABLED. Defaults to DISABLED.
 	Requirement *string `json:"requirement,omitempty" tf:"requirement,omitempty"`
 }
@@ -61,8 +46,8 @@ type ExecutionParameters struct {
 	Authenticator *string `json:"authenticator,omitempty" tf:"authenticator,omitempty"`
 
 	// The alias of the flow this execution is attached to.
-	// +kubebuilder:validation:Optional
-	ParentFlowAlias *string `json:"parentFlowAlias,omitempty" tf:"parent_flow_alias,omitempty"`
+	// +kubebuilder:validation:Required
+	ParentFlowAlias *string `json:"parentFlowAlias" tf:"parent_flow_alias,omitempty"`
 
 	// The realm the authentication execution exists in.
 	// +crossplane:generate:reference:type=github.com/viletay/provider-keycloak/apis/realm/v1alpha1.Realm
@@ -119,7 +104,6 @@ type Execution struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.authenticator) || (has(self.initProvider) && has(self.initProvider.authenticator))",message="spec.forProvider.authenticator is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.parentFlowAlias) || (has(self.initProvider) && has(self.initProvider.parentFlowAlias))",message="spec.forProvider.parentFlowAlias is a required parameter"
 	Spec   ExecutionSpec   `json:"spec"`
 	Status ExecutionStatus `json:"status,omitempty"`
 }

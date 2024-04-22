@@ -21,30 +21,6 @@ type ExecutionConfigInitParameters struct {
 	// The configuration. Keys are specific to each configurable authentication execution and not checked when applying.
 	// +mapType=granular
 	Config map[string]*string `json:"config,omitempty" tf:"config,omitempty"`
-
-	// The authentication execution this configuration is attached to.
-	// +crossplane:generate:reference:type=Execution
-	ExecutionID *string `json:"executionId,omitempty" tf:"execution_id,omitempty"`
-
-	// Reference to a Execution to populate executionId.
-	// +kubebuilder:validation:Optional
-	ExecutionIDRef *v1.Reference `json:"executionIdRef,omitempty" tf:"-"`
-
-	// Selector for a Execution to populate executionId.
-	// +kubebuilder:validation:Optional
-	ExecutionIDSelector *v1.Selector `json:"executionIdSelector,omitempty" tf:"-"`
-
-	// The realm the authentication execution exists in.
-	// +crossplane:generate:reference:type=github.com/viletay/provider-keycloak/apis/realm/v1alpha1.Realm
-	RealmID *string `json:"realmId,omitempty" tf:"realm_id,omitempty"`
-
-	// Reference to a Realm in realm to populate realmId.
-	// +kubebuilder:validation:Optional
-	RealmIDRef *v1.Reference `json:"realmIdRef,omitempty" tf:"-"`
-
-	// Selector for a Realm in realm to populate realmId.
-	// +kubebuilder:validation:Optional
-	RealmIDSelector *v1.Selector `json:"realmIdSelector,omitempty" tf:"-"`
 }
 
 type ExecutionConfigObservation struct {

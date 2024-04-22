@@ -26,24 +26,9 @@ type SubflowInitParameters struct {
 	// A description for the authentication subflow.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The alias for the parent authentication flow.
-	ParentFlowAlias *string `json:"parentFlowAlias,omitempty" tf:"parent_flow_alias,omitempty"`
-
 	// The type of authentication subflow to create. Valid choices include basic-flow, form-flow
 	// and client-flow. Defaults to basic-flow.
 	ProviderID *string `json:"providerId,omitempty" tf:"provider_id,omitempty"`
-
-	// The realm that the authentication subflow exists in.
-	// +crossplane:generate:reference:type=github.com/viletay/provider-keycloak/apis/realm/v1alpha1.Realm
-	RealmID *string `json:"realmId,omitempty" tf:"realm_id,omitempty"`
-
-	// Reference to a Realm in realm to populate realmId.
-	// +kubebuilder:validation:Optional
-	RealmIDRef *v1.Reference `json:"realmIdRef,omitempty" tf:"-"`
-
-	// Selector for a Realm in realm to populate realmId.
-	// +kubebuilder:validation:Optional
-	RealmIDSelector *v1.Selector `json:"realmIdSelector,omitempty" tf:"-"`
 
 	// The requirement setting, which can be one of REQUIRED, ALTERNATIVE, OPTIONAL, CONDITIONAL,
 	// or DISABLED. Defaults to DISABLED.
@@ -97,8 +82,8 @@ type SubflowParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// The alias for the parent authentication flow.
-	// +kubebuilder:validation:Optional
-	ParentFlowAlias *string `json:"parentFlowAlias,omitempty" tf:"parent_flow_alias,omitempty"`
+	// +kubebuilder:validation:Required
+	ParentFlowAlias *string `json:"parentFlowAlias" tf:"parent_flow_alias,omitempty"`
 
 	// The type of authentication subflow to create. Valid choices include basic-flow, form-flow
 	// and client-flow. Defaults to basic-flow.
@@ -161,7 +146,6 @@ type Subflow struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.alias) || (has(self.initProvider) && has(self.initProvider.alias))",message="spec.forProvider.alias is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.parentFlowAlias) || (has(self.initProvider) && has(self.initProvider.parentFlowAlias))",message="spec.forProvider.parentFlowAlias is a required parameter"
 	Spec   SubflowSpec   `json:"spec"`
 	Status SubflowStatus `json:"status,omitempty"`
 }
