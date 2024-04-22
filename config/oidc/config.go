@@ -14,6 +14,9 @@ func Configure(p *ujconfig.Provider) {
 		r.References["realm"] = ujconfig.Reference{
 			Type: "github.com/viletay/provider-keycloak/apis/realm/v1alpha1.Realm",
 		}
+		if s, ok := r.TerraformResource.Schema["client_id"]; ok {
+			s.Sensitive = true
+		}
 	})
 
 }

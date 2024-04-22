@@ -7,20 +7,21 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
+
+	ujconfig "github.com/crossplane/upjet/pkg/config"
+
+	"github.com/viletay/provider-keycloak/config/common"
 	"github.com/viletay/provider-keycloak/config/defaults"
 	"github.com/viletay/provider-keycloak/config/group"
 	"github.com/viletay/provider-keycloak/config/mapper"
 	"github.com/viletay/provider-keycloak/config/oidc"
+	"github.com/viletay/provider-keycloak/config/openidclient"
 	"github.com/viletay/provider-keycloak/config/openidgroup"
+	"github.com/viletay/provider-keycloak/config/realm"
 	"github.com/viletay/provider-keycloak/config/role"
 	"github.com/viletay/provider-keycloak/config/saml"
 	"github.com/viletay/provider-keycloak/config/samlclient"
 	"github.com/viletay/provider-keycloak/config/user"
-
-	ujconfig "github.com/crossplane/upjet/pkg/config"
-	"github.com/viletay/provider-keycloak/config/common"
-	"github.com/viletay/provider-keycloak/config/openidclient"
-	"github.com/viletay/provider-keycloak/config/realm"
 )
 
 const (
