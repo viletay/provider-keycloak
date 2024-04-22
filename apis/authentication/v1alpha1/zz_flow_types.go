@@ -23,6 +23,18 @@ type FlowInitParameters struct {
 
 	// The type of authentication flow to create. Valid choices include basic-flow and client-flow. Defaults to basic-flow.
 	ProviderID *string `json:"providerId,omitempty" tf:"provider_id,omitempty"`
+
+	// The realm that the authentication flow exists in.
+	// +crossplane:generate:reference:type=github.com/viletay/provider-keycloak/apis/realm/v1alpha1.Realm
+	RealmID *string `json:"realmId,omitempty" tf:"realm_id,omitempty"`
+
+	// Reference to a Realm in realm to populate realmId.
+	// +kubebuilder:validation:Optional
+	RealmIDRef *v1.Reference `json:"realmIdRef,omitempty" tf:"-"`
+
+	// Selector for a Realm in realm to populate realmId.
+	// +kubebuilder:validation:Optional
+	RealmIDSelector *v1.Selector `json:"realmIdSelector,omitempty" tf:"-"`
 }
 
 type FlowObservation struct {

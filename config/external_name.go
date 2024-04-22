@@ -42,10 +42,10 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"keycloak_saml_identity_provider":                   config.IdentifierFromProvider,
 	"keycloak_default_roles":                            config.TemplatedStringAsIdentifier("", "{{ .parameters.realm_id }}/{{ .external_name }}"),
 	"keycloak_authentication_bindings":                  config.IdentifierFromProvider,
-	"keycloak_authentication_execution":                 config.TemplatedStringAsIdentifier("", "{{ .parameters.realm_id }}/{{ .parameters.parent_flow_alias }}/{{ .external_name }}"),
-	"keycloak_authentication_execution_config":          config.TemplatedStringAsIdentifier("", "{{ .parameters.realm_id }}/{{ .parameters.execution_id }}/{{ .external_name }}"),
-	"keycloak_authentication_flow":                      config.TemplatedStringAsIdentifier("", "{{ .parameters.realm_id }}/{{ .external_name }}"),
-	"keycloak_authentication_subflow":                   config.TemplatedStringAsIdentifier("", "{{ .parameters.realm_id }}/{{ .parameters.parent_flow_alias }}/{{ .external_name }}"),
+	"keycloak_authentication_execution":                 config.IdentifierFromProvider,
+	"keycloak_authentication_execution_config":          config.IdentifierFromProvider,
+	"keycloak_authentication_flow":                      config.IdentifierFromProvider,
+	"keycloak_authentication_subflow":                   config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
