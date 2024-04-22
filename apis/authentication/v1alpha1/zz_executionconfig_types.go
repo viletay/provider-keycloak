@@ -23,7 +23,16 @@ type ExecutionConfigInitParameters struct {
 	Config map[string]*string `json:"config,omitempty" tf:"config,omitempty"`
 
 	// The authentication execution this configuration is attached to.
+	// +crossplane:generate:reference:type=Execution
 	ExecutionID *string `json:"executionId,omitempty" tf:"execution_id,omitempty"`
+
+	// Reference to a Execution to populate executionId.
+	// +kubebuilder:validation:Optional
+	ExecutionIDRef *v1.Reference `json:"executionIdRef,omitempty" tf:"-"`
+
+	// Selector for a Execution to populate executionId.
+	// +kubebuilder:validation:Optional
+	ExecutionIDSelector *v1.Selector `json:"executionIdSelector,omitempty" tf:"-"`
 
 	// The realm the authentication execution exists in.
 	// +crossplane:generate:reference:type=github.com/viletay/provider-keycloak/apis/realm/v1alpha1.Realm
@@ -68,8 +77,17 @@ type ExecutionConfigParameters struct {
 	Config map[string]*string `json:"config,omitempty" tf:"config,omitempty"`
 
 	// The authentication execution this configuration is attached to.
+	// +crossplane:generate:reference:type=Execution
 	// +kubebuilder:validation:Optional
 	ExecutionID *string `json:"executionId,omitempty" tf:"execution_id,omitempty"`
+
+	// Reference to a Execution to populate executionId.
+	// +kubebuilder:validation:Optional
+	ExecutionIDRef *v1.Reference `json:"executionIdRef,omitempty" tf:"-"`
+
+	// Selector for a Execution to populate executionId.
+	// +kubebuilder:validation:Optional
+	ExecutionIDSelector *v1.Selector `json:"executionIdSelector,omitempty" tf:"-"`
 
 	// The realm the authentication execution exists in.
 	// +crossplane:generate:reference:type=github.com/viletay/provider-keycloak/apis/realm/v1alpha1.Realm
@@ -123,7 +141,6 @@ type ExecutionConfig struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.alias) || (has(self.initProvider) && has(self.initProvider.alias))",message="spec.forProvider.alias is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.config) || (has(self.initProvider) && has(self.initProvider.config))",message="spec.forProvider.config is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.executionId) || (has(self.initProvider) && has(self.initProvider.executionId))",message="spec.forProvider.executionId is a required parameter"
 	Spec   ExecutionConfigSpec   `json:"spec"`
 	Status ExecutionConfigStatus `json:"status,omitempty"`
 }

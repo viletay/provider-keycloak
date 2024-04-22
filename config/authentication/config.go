@@ -17,6 +17,9 @@ func Configure(p *ujconfig.Provider) {
 	})
 	p.AddResourceConfigurator("keycloak_authentication_execution_config", func(r *ujconfig.Resource) {
 		r.ShortGroup = Group
+		r.References["execution_id"] = ujconfig.Reference{
+			Type: "Execution",
+		}
 	})
 	p.AddResourceConfigurator("keycloak_authentication_flow", func(r *ujconfig.Resource) {
 		r.ShortGroup = Group

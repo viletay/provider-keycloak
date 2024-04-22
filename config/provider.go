@@ -7,6 +7,7 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
+	"github.com/viletay/provider-keycloak/config/authentication"
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 
@@ -48,6 +49,7 @@ func GetProvider() *ujconfig.Provider {
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
+		authentication.Configure,
 		realm.Configure,
 
 		user.Configure,

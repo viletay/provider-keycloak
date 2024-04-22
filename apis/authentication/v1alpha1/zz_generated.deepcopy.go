@@ -365,6 +365,16 @@ func (in *ExecutionConfigInitParameters) DeepCopyInto(out *ExecutionConfigInitPa
 		*out = new(string)
 		**out = **in
 	}
+	if in.ExecutionIDRef != nil {
+		in, out := &in.ExecutionIDRef, &out.ExecutionIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ExecutionIDSelector != nil {
+		in, out := &in.ExecutionIDSelector, &out.ExecutionIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.RealmID != nil {
 		in, out := &in.RealmID, &out.RealmID
 		*out = new(string)
@@ -503,6 +513,16 @@ func (in *ExecutionConfigParameters) DeepCopyInto(out *ExecutionConfigParameters
 		in, out := &in.ExecutionID, &out.ExecutionID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ExecutionIDRef != nil {
+		in, out := &in.ExecutionIDRef, &out.ExecutionIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ExecutionIDSelector != nil {
+		in, out := &in.ExecutionIDSelector, &out.ExecutionIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.RealmID != nil {
 		in, out := &in.RealmID, &out.RealmID

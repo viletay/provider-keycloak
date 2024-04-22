@@ -11,7 +11,9 @@ spec:
     alias: my-config-alias
     config:
       defaultProvider: my-config-default-idp
-    executionId: ${keycloak_authentication_execution.execution.id}
+    executionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: execution
     realmIdSelector:
       matchLabels:
         testing.upbound.io/example-name: realm
