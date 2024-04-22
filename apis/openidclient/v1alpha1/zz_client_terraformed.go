@@ -21,7 +21,7 @@ func (mg *Client) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this Client
 func (tr *Client) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"client_id": "spec.forProvider.clientIdSecretRef", "client_secret": "spec.forProvider.clientSecretSecretRef"}
+	return map[string]string{"client_secret": "spec.forProvider.clientSecretSecretRef"}
 }
 
 // GetObservation of this Client

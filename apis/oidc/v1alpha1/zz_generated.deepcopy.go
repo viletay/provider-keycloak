@@ -73,21 +73,6 @@ func (in *IdentityProviderInitParameters) DeepCopyInto(out *IdentityProviderInit
 		*out = new(bool)
 		**out = **in
 	}
-	if in.ClientID != nil {
-		in, out := &in.ClientID, &out.ClientID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ClientIDRef != nil {
-		in, out := &in.ClientIDRef, &out.ClientIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ClientIDSelector != nil {
-		in, out := &in.ClientIDSelector, &out.ClientIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.DefaultScopes != nil {
 		in, out := &in.DefaultScopes, &out.DefaultScopes
 		*out = new(string)
@@ -301,11 +286,6 @@ func (in *IdentityProviderObservation) DeepCopyInto(out *IdentityProviderObserva
 		*out = new(bool)
 		**out = **in
 	}
-	if in.ClientID != nil {
-		in, out := &in.ClientID, &out.ClientID
-		*out = new(string)
-		**out = **in
-	}
 	if in.DefaultScopes != nil {
 		in, out := &in.DefaultScopes, &out.DefaultScopes
 		*out = new(string)
@@ -487,21 +467,7 @@ func (in *IdentityProviderParameters) DeepCopyInto(out *IdentityProviderParamete
 		*out = new(bool)
 		**out = **in
 	}
-	if in.ClientID != nil {
-		in, out := &in.ClientID, &out.ClientID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ClientIDRef != nil {
-		in, out := &in.ClientIDRef, &out.ClientIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ClientIDSelector != nil {
-		in, out := &in.ClientIDSelector, &out.ClientIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
+	out.ClientIDSecretRef = in.ClientIDSecretRef
 	out.ClientSecretSecretRef = in.ClientSecretSecretRef
 	if in.DefaultScopes != nil {
 		in, out := &in.DefaultScopes, &out.DefaultScopes

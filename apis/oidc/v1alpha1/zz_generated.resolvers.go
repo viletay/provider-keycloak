@@ -9,8 +9,7 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1alpha1 "github.com/viletay/provider-keycloak/apis/openidclient/v1alpha1"
-	v1alpha11 "github.com/viletay/provider-keycloak/apis/realm/v1alpha1"
+	v1alpha1 "github.com/viletay/provider-keycloak/apis/realm/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -22,29 +21,13 @@ func (mg *IdentityProvider) ResolveReferences(ctx context.Context, c client.Read
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ClientID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.ClientIDRef,
-		Selector:     mg.Spec.ForProvider.ClientIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.ClientList{},
-			Managed: &v1alpha1.Client{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.ClientID")
-	}
-	mg.Spec.ForProvider.ClientID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.ClientIDRef = rsp.ResolvedReference
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Realm),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.ForProvider.RealmRef,
 		Selector:     mg.Spec.ForProvider.RealmSelector,
 		To: reference.To{
-			List:    &v1alpha11.RealmList{},
-			Managed: &v1alpha11.Realm{},
+			List:    &v1alpha1.RealmList{},
+			Managed: &v1alpha1.Realm{},
 		},
 	})
 	if err != nil {
@@ -54,29 +37,13 @@ func (mg *IdentityProvider) ResolveReferences(ctx context.Context, c client.Read
 	mg.Spec.ForProvider.RealmRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClientID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.InitProvider.ClientIDRef,
-		Selector:     mg.Spec.InitProvider.ClientIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.ClientList{},
-			Managed: &v1alpha1.Client{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.ClientID")
-	}
-	mg.Spec.InitProvider.ClientID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.ClientIDRef = rsp.ResolvedReference
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Realm),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.InitProvider.RealmRef,
 		Selector:     mg.Spec.InitProvider.RealmSelector,
 		To: reference.To{
-			List:    &v1alpha11.RealmList{},
-			Managed: &v1alpha11.Realm{},
+			List:    &v1alpha1.RealmList{},
+			Managed: &v1alpha1.Realm{},
 		},
 	})
 	if err != nil {

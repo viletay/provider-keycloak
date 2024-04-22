@@ -30,10 +30,9 @@ metadata:
 spec:
   forProvider:
     accessType: CONFIDENTIAL
-    clientIdSecretRef:
-      key: example-key
-      name: example-secret
-      namespace: upbound-system
+    clientIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     enabled: true
     name: client
     realmIdSelector:
