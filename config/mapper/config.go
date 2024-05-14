@@ -11,6 +11,12 @@ const (
 func Configure(p *ujconfig.Provider) {
 	p.AddResourceConfigurator("keycloak_generic_protocol_mapper", func(r *ujconfig.Resource) {
 		r.ShortGroup = Group
+		r.References["client_scope_id"] = ujconfig.Reference{
+			Type: "github.com/viletay/provider-keycloak/apis/openidclient/v1alpha1.ClientScope",
+		}
+		r.References["client_id"] = ujconfig.Reference{
+			Type: "github.com/viletay/provider-keycloak/apis/openidclient/v1alpha1.Client",
+		}
 	})
 	p.AddResourceConfigurator("keycloak_generic_role_mapper", func(r *ujconfig.Resource) {
 		r.ShortGroup = Group

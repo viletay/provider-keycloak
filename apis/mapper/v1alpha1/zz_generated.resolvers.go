@@ -81,6 +81,22 @@ func (mg *ProtocolMapper) ResolveReferences(ctx context.Context, c client.Reader
 	mg.Spec.ForProvider.ClientIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ClientScopeID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.ClientScopeIDRef,
+		Selector:     mg.Spec.ForProvider.ClientScopeIDSelector,
+		To: reference.To{
+			List:    &v1alpha11.ClientScopeList{},
+			Managed: &v1alpha11.ClientScope{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ClientScopeID")
+	}
+	mg.Spec.ForProvider.ClientScopeID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ClientScopeIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RealmID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.ForProvider.RealmIDRef,
@@ -111,6 +127,22 @@ func (mg *ProtocolMapper) ResolveReferences(ctx context.Context, c client.Reader
 	}
 	mg.Spec.InitProvider.ClientID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ClientIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClientScopeID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ClientScopeIDRef,
+		Selector:     mg.Spec.InitProvider.ClientScopeIDSelector,
+		To: reference.To{
+			List:    &v1alpha11.ClientScopeList{},
+			Managed: &v1alpha11.ClientScope{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ClientScopeID")
+	}
+	mg.Spec.InitProvider.ClientScopeID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ClientScopeIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RealmID),
